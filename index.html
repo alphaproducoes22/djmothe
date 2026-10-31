@@ -445,8 +445,8 @@
     <div class="rv d1">
       <div class="label">A história</div>
       <h2 class="disp">DJ <span class="grad">Mothé</span></h2>
-      <div class="stats"><div><b class="grad">23</b><span>anos de carreira</span></div><div><b class="grad">2012</b><span>dedicado à música cristã</span></div></div>
-      <p>Guilherme Mothe de Campos iniciou sua carreira como DJ há 23 anos no cenário secular. Em 2010, teve um encontro transformador com Jesus e decidiu abandonar sua trajetória musical.</p>
+      <div class="stats"><div><b class="grad">24</b><span>anos de carreira</span></div><div><b class="grad">2012</b><span>dedicado à música cristã</span></div></div>
+      <p>Guilherme Mothe de Campos iniciou sua carreira como DJ há 24 anos no cenário secular. Em 2010, teve um encontro transformador com Jesus e decidiu abandonar sua trajetória musical.</p>
       <p>Em 2012, sentiu o chamado para voltar a tocar, mas com um propósito: dedicar-se exclusivamente à música cristã. Desde então, tem se destacado e crescido no meio, levando a mensagem do Evangelho e exaltando o nome de Jesus por meio da música.</p>
       <p>Natural de Campos-RJ, Mothe congrega na Igreja Batista em São Joaquim desde a sua conversão, é casado com Mikaela, pai do Jeff e se formou bacharel em Teologia no Seminário Adorart em 2021.</p>
       <a class="ig" href="https://www.instagram.com/djmothe_/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>@djmothe_</a>
@@ -918,6 +918,9 @@
     var a=document.getElementById('bgm'), b=document.getElementById('mus'), ic=document.getElementById('mus-ic'), lbl=document.getElementById('mus-lbl');
     if(!a||!b) return;
     var ALVO=0.35, pausadoPeloCliente=false, pausadoPorVideo=false, fade=null;
+    // se a música não estiver na pasta v/, procura na pasta principal; se não achar em lugar nenhum, esconde o botão
+    var tentativas=['v/musica.mp3','musica.mp3'], ti=0;
+    a.addEventListener('error',function(){ ti++; if(ti<tentativas.length){ a.src=tentativas[ti]; a.load(); } else { b.style.display='none'; } });
     var PLAY='<path d="M8 5v14l11-7z"/>', PAUSE='<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
     function pinta(){ var on=!a.paused; b.classList.toggle('on',on); ic.innerHTML=on?PAUSE:PLAY; b.setAttribute('aria-label',on?'Pausar música':'Tocar música'); lbl.firstChild.nodeValue=on?'Pausar música':'Tocar música'; }
     function sobe(){ clearInterval(fade); a.volume=0; fade=setInterval(function(){ a.volume=Math.min(ALVO,a.volume+0.02); if(a.volume>=ALVO) clearInterval(fade); },80); }
