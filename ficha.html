@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>DJ Mothé — Dados para o contrato</title>
+<style>
+  @font-face{font-family:Unbounded;font-weight:600;font-display:swap;src:url(fonts/unbounded-latin-600-normal.woff2) format("woff2")}
+  @font-face{font-family:Unbounded;font-weight:800;font-display:swap;src:url(fonts/unbounded-latin-800-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:400;font-display:swap;src:url(fonts/manrope-latin-400-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:600;font-display:swap;src:url(fonts/manrope-latin-600-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:700;font-display:swap;src:url(fonts/manrope-latin-700-normal.woff2) format("woff2")}
+  :root{--bg:#05070f;--line:rgba(255,255,255,.12);--blue:#3d7bff;--blue2:#7aa7ff;--txt:#eef2fb;--mut:#8e98b3;--wa:#25d366}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(60% 40% at 50% 0%,rgba(61,123,255,.18),transparent 70%),var(--bg);color:var(--txt);font-family:Manrope,system-ui,sans-serif;line-height:1.55;min-height:100vh;-webkit-font-smoothing:antialiased}
+  .wrap{width:min(620px,100% - 32px);margin:0 auto;padding:36px 0 70px}
+  .logo{height:30px;width:auto;margin-bottom:30px}
+  h1{font-family:Unbounded,sans-serif;font-weight:800;font-size:clamp(1.6rem,6vw,2.2rem);line-height:1.1;letter-spacing:-.02em;text-transform:uppercase}
+  h1 span{background:linear-gradient(100deg,#7aa7ff,#3d7bff 45%,#9b8cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .intro{color:var(--mut);margin:14px 0 28px;font-size:1rem}
+  .intro b{color:var(--txt)}
+  fieldset{border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;background:rgba(255,255,255,.03)}
+  legend{font-family:Unbounded,sans-serif;font-weight:600;font-size:.82rem;padding:0 8px;color:var(--blue2);letter-spacing:.02em}
+  .grid{display:flex;flex-wrap:wrap;gap:12px}
+  .fld{flex:1 1 100%;display:flex;flex-direction:column;gap:6px}
+  .fld.half{flex:1 1 calc(50% - 6px);min-width:150px}
+  .fld.uf{flex:0 0 96px}
+  .fld span{font-size:.78rem;font-weight:700;color:#aeb8d2}
+  .fld small{font-size:.72rem;color:var(--mut);font-weight:500}
+  input,select,textarea{font:inherit;font-size:16px;color:var(--txt);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.16);border-radius:12px;padding:12px 14px;width:100%;color-scheme:dark}
+  textarea{min-height:80px;resize:vertical}
+  select option{background:#0b1022}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(61,123,255,.25)}
+  .err input,.err select{border-color:#ff6b6b}
+  .err span{color:#ff8a8a}
+  .btn{display:flex;align-items:center;justify-content:center;width:100%;padding:16px;border:0;border-radius:999px;background:var(--blue);color:#fff;font:700 1rem Manrope,sans-serif;cursor:pointer;box-shadow:0 12px 34px -12px rgba(61,123,255,.9);margin-top:8px}
+  .btn:disabled{opacity:.6;cursor:wait}
+  .msg{margin-top:14px;font-size:.9rem;text-align:center;color:#ff8a8a;min-height:1em}
+  .ok{text-align:center;padding:50px 10px}
+  .ok .ic{width:78px;height:78px;border-radius:50%;background:rgba(37,211,102,.15);border:1px solid rgba(37,211,102,.5);display:grid;place-items:center;margin:0 auto 22px;font-size:2rem}
+  .ok p{color:var(--mut);margin-top:12px}
+  .priv{font-size:.75rem;color:var(--mut);text-align:center;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <img class="logo" src="img/logo.png" alt="DJ Mothé">
+  <div id="tela-form">
+    <h1>Dados para o <span>contrato</span></h1>
+    <p class="intro" id="intro">Que alegria ter você com a gente! Preencha os dados abaixo para prepararmos o seu contrato.</p>
+    <form id="f" novalidate></form>
+    <p class="priv">Seus dados são usados apenas para o contrato e a organização do seu evento.</p>
+  </div>
+  <div id="tela-ok" class="ok" hidden>
+    <div class="ic">✅</div>
+    <h1>Dados <span>enviados!</span></h1>
+    <p>Obrigado! Recebemos suas informações e vamos preparar o seu contrato. Em breve entraremos em contato pelo WhatsApp.</p>
+  </div>
+  <div id="tela-erro" class="ok" hidden>
+    <div class="ic">⚠️</div>
+    <h1>Link <span>inválido</span></h1>
+    <p>Este link não está completo. Peça um novo link pelo WhatsApp.</p>
+  </div>
+</div>
+
+<script>
+  var FIREBASE = { projeto:"gestao-alpha-producoes", chave:"AIzaSyBR6gD3Bjo57qNhQqKE1rWb2LgmhJoWY9E", colecao:"alpha_site_fichas_v1" };
+  var UFS = "AC AL AP AM BA CE DF ES GO MA MT MS MG PA PB PR PE PI RJ RN RS RO RR SC SP SE TO".split(" ");
+
+  var q = new URLSearchParams(location.search);
+  var TOKEN = (q.get("f")||"").replace(/[^a-zA-Z0-9_]/g,"").slice(0,40);
+  var TIPO = q.get("t")==="religioso" ? "religioso" : "social";
+  var NOME = (q.get("n")||"").slice(0,60);
+
+  var CAMPOS = {
+    social: [
+      {g:"Responsável pelo contrato"},
+      {id:"nomeCompleto", rot:"Nome completo", obr:1},
+      {id:"cpf", rot:"CPF", obr:1, meia:1, tipo:"cpf", dica:"Só os números"},
+      {id:"telefone", rot:"WhatsApp", obr:1, meia:1, tipo:"tel"},
+      {id:"enderecoResidencial", rot:"Endereço residencial", obr:1, dica:"Rua, número, bairro, cidade e CEP"},
+      {g:"Sobre o evento"},
+      {id:"tipoEvento", rot:"Tipo de evento", obr:1, meia:1, ops:["Casamento","XV anos","Aniversário","Formatura","Outro"]},
+      {id:"homenageados", rot:"Noivos / Debutante / Aniversariante", meia:1},
+      {id:"dataEvento", rot:"Data do evento", obr:1, meia:1, tipo:"date"},
+      {id:"horario", rot:"Horário de início", obr:1, meia:1, tipo:"time"},
+      {id:"local", rot:"Nome do local (salão / espaço)", obr:1},
+      {id:"enderecoLocal", rot:"Endereço do local", obr:1, dica:"Rua, número e bairro"},
+      {id:"cidade", rot:"Cidade", obr:1, meia:1},
+      {id:"uf", rot:"UF", obr:1, uf:1, ops:UFS},
+      {id:"cerimonialista", rot:"Cerimonialista (se tiver)", meia:1},
+      {id:"cerimonialistaTel", rot:"WhatsApp da cerimonialista", meia:1, tipo:"tel"},
+      {id:"obs", rot:"Observações", tipo:"area"}
+    ],
+    religioso: [
+      {g:"Igreja / instituição contratante"},
+      {id:"razaoSocial", rot:"Razão social", obr:1},
+      {id:"cnpj", rot:"CNPJ", obr:1, meia:1, tipo:"cnpj", dica:"Só os números"},
+      {id:"telefone", rot:"WhatsApp do responsável", obr:1, meia:1, tipo:"tel"},
+      {id:"enderecoSede", rot:"Endereço da sede", obr:1, dica:"Rua, número, bairro, cidade e CEP"},
+      {id:"responsavel", rot:"Nome do responsável", obr:1},
+      {g:"Sobre o evento"},
+      {id:"nomeEvento", rot:"Nome do evento", obr:1},
+      {id:"dataEvento", rot:"Data do evento", obr:1, meia:1, tipo:"date"},
+      {id:"horario", rot:"Horário de início", obr:1, meia:1, tipo:"time"},
+      {id:"local", rot:"Nome do local", obr:1},
+      {id:"enderecoLocal", rot:"Endereço do local", obr:1, dica:"Rua, número e bairro"},
+      {id:"cidade", rot:"Cidade", obr:1, meia:1},
+      {id:"uf", rot:"UF", obr:1, uf:1, ops:UFS},
+      {id:"obs", rot:"Observações", tipo:"area"}
+    ]
+  };
+
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  if(!TOKEN){ document.getElementById("tela-form").hidden=true; document.getElementById("tela-erro").hidden=false; }
+  else {
+    if(NOME) document.getElementById("intro").innerHTML = "Olá, <b>"+esc(NOME)+"</b>! Que alegria ter você com a gente. Preencha os dados abaixo para prepararmos o seu contrato.";
+    var form=document.getElementById("f"), html="", aberto=false;
+    CAMPOS[TIPO].forEach(function(c){
+      if(c.g){ if(aberto) html+="</div></fieldset>"; html+="<fieldset><legend>"+c.g+"</legend><div class='grid'>"; aberto=true; return; }
+      var inp;
+      if(c.ops) inp="<select name='"+c.id+"'"+(c.obr?" required":"")+"><option value=''>"+(c.uf?"UF":"Escolha…")+"</option>"+c.ops.map(function(o){return "<option"+(c.uf&&o==="RJ"?"":"")+">"+o+"</option>"}).join("")+"</select>";
+      else if(c.tipo==="area") inp="<textarea name='"+c.id+"'></textarea>";
+      else {
+        var t = c.tipo==="date"?"date":c.tipo==="time"?"time":c.tipo==="tel"?"tel":"text";
+        var extra = (c.tipo==="cpf"||c.tipo==="cnpj")?" inputmode='numeric' maxlength='18'":"";
+        if(c.tipo==="tel") extra=" inputmode='tel' placeholder='(21) 99999-9999'";
+        inp="<input name='"+c.id+"' type='"+t+"'"+(c.obr?" required":"")+extra+">";
+      }
+      html+="<label class='fld"+(c.meia?" half":"")+(c.uf?" uf":"")+"'><span>"+c.rot+(c.obr?" *":"")+"</span>"+inp+(c.dica?"<small>"+c.dica+"</small>":"")+"</label>";
+    });
+    if(aberto) html+="</div></fieldset>";
+    html+="<button class='btn' type='submit' id='enviar'>Enviar dados</button><p class='msg' id='msg'></p>";
+    form.innerHTML=html;
+    if(form.elements.uf) form.elements.uf.value="RJ";
+
+    function fsVal(v){
+      if(v instanceof Date) return {timestampValue:v.toISOString()};
+      if(typeof v==="object"){var f={};Object.keys(v).forEach(function(k){f[k]=fsVal(v[k])});return {mapValue:{fields:f}}}
+      return {stringValue:String(v)};
+    }
+    form.addEventListener("input",function(e){var f=e.target.closest(".fld"); if(f) f.classList.remove("err")});
+    form.addEventListener("submit",function(e){
+      e.preventDefault();
+      var ok=true, msg=document.getElementById("msg"); msg.textContent="";
+      form.querySelectorAll("[required]").forEach(function(el){ var v=!String(el.value).trim(); el.closest(".fld").classList.toggle("err",v); if(v) ok=false; });
+      var doc = form.elements.cpf || form.elements.cnpj;
+      if(doc && doc.value.trim()){
+        var n=doc.value.replace(/\D/g,""), need = form.elements.cpf ? 11 : 14;
+        if(n.length!==need){ doc.closest(".fld").classList.add("err"); ok=false; msg.textContent = (form.elements.cpf?"O CPF precisa ter 11 números.":"O CNPJ precisa ter 14 números."); }
+      }
+      if(!ok){ if(!msg.textContent) msg.textContent="Preencha os campos marcados em vermelho."; var p=form.querySelector(".err input,.err select"); if(p) p.focus(); return; }
+      var campos={}; CAMPOS[TIPO].forEach(function(c){ if(c.id){ var v=(form.elements[c.id].value||"").trim(); if(v) campos[c.id]=v.slice(0,300); } });
+      var body={fields:{tipo:fsVal(TIPO), campos:fsVal(campos), enviadoEm:fsVal(new Date())}};
+      var bt=document.getElementById("enviar"); bt.disabled=true; bt.textContent="Enviando…";
+      var base="https://firestore.googleapis.com/v1/projects/"+FIREBASE.projeto+"/databases/(default)/documents/"+FIREBASE.colecao;
+      fetch(base+"/"+TOKEN+"?key="+FIREBASE.chave,{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
+        .then(function(r){ if(!r.ok) throw new Error(r.status); document.getElementById("tela-form").hidden=true; document.getElementById("tela-ok").hidden=false; window.scrollTo(0,0); })
+        .catch(function(){ bt.disabled=false; bt.textContent="Enviar dados"; msg.textContent="Não conseguimos enviar agora. Verifique sua internet e tente de novo."; });
+    });
+  }
+</script>
+</body>
+</html>
