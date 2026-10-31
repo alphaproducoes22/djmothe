@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DJ Mothé — Proposta para o seu evento</title>
+<style>
+  @font-face{font-family:Unbounded;font-weight:600;font-display:swap;src:url(fonts/unbounded-latin-600-normal.woff2) format("woff2")}
+  @font-face{font-family:Unbounded;font-weight:800;font-display:swap;src:url(fonts/unbounded-latin-800-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:400;font-display:swap;src:url(fonts/manrope-latin-400-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:500;font-display:swap;src:url(fonts/manrope-latin-500-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:600;font-display:swap;src:url(fonts/manrope-latin-600-normal.woff2) format("woff2")}
+  @font-face{font-family:Manrope;font-weight:700;font-display:swap;src:url(fonts/manrope-latin-700-normal.woff2) format("woff2")}
+
+  :root{
+    --bg:#05070f; --bg2:#080c1a; --card:rgba(255,255,255,.035); --card2:rgba(255,255,255,.06);
+    --line:rgba(255,255,255,.09); --line2:rgba(122,167,255,.35);
+    --blue:#3d7bff; --blue2:#7aa7ff; --ice:#c9d9ff; --txt:#eef2fb; --mut:#8e98b3; --mut2:#5d6784;
+    --wa:#25d366;
+    --grad:linear-gradient(100deg,#7aa7ff 0%,#3d7bff 45%,#9b8cff 100%);
+    --r:22px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--txt);font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img,video{display:block;max-width:100%}
+  a{color:inherit;text-decoration:none}
+  .wrap{width:min(1120px,100% - 40px);margin:0 auto}
+  .disp{font-family:Unbounded,"Arial Black",sans-serif;font-weight:800;letter-spacing:-.02em;line-height:1.02}
+  .grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .label{display:inline-flex;align-items:center;gap:10px;font-size:.72rem;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:var(--blue2)}
+  .label::before{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+  section{padding:110px 0;position:relative}
+  .head{margin-bottom:48px;max-width:640px}
+  .head h2{font-size:clamp(1.9rem,4.6vw,3.1rem);margin-top:16px}
+  .head p{color:var(--mut);margin-top:16px;font-size:1.05rem}
+  .center{text-align:center;margin-left:auto;margin-right:auto}
+  .center .label::after{content:"";width:22px;height:1px;background:currentColor;opacity:.7}
+
+  /* grão sutil */
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:100;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+  /* botões */
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:700;font-size:.95rem;letter-spacing:.01em;transition:transform .2s,box-shadow .2s,background .2s,border-color .2s;white-space:nowrap;cursor:pointer;border:0}
+  .btn:active{transform:scale(.97)}
+  .btn svg{width:19px;height:19px;flex:none}
+  .btn-blue{background:var(--blue);color:#fff;box-shadow:0 12px 34px -12px rgba(61,123,255,.9),inset 0 1px 0 rgba(255,255,255,.25)}
+  .btn-blue:hover{background:#4d87ff;box-shadow:0 16px 40px -10px rgba(61,123,255,.95),inset 0 1px 0 rgba(255,255,255,.25)}
+  .btn-wa{background:var(--wa);color:#032912;box-shadow:0 12px 34px -12px rgba(37,211,102,.8),inset 0 1px 0 rgba(255,255,255,.35)}
+  .btn-wa:hover{background:#34e07a}
+  .btn-line{border:1px solid rgba(255,255,255,.18);color:var(--txt);background:rgba(255,255,255,.04);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+  .btn-line:hover{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.08)}
+
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:30;transition:background .3s,border-color .3s,backdrop-filter .3s;border-bottom:1px solid transparent}
+  .nav.solid{background:rgba(5,7,15,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-color:var(--line)}
+  .nav .wrap{display:flex;align-items:center;justify-content:space-between;height:70px}
+  .nav img{height:26px;width:auto}
+  .nav .btn{padding:10px 18px;font-size:.85rem}
+
+  /* HERO */
+  .hero{min-height:100svh;display:flex;align-items:center;overflow:hidden;isolation:isolate;position:relative}
+  .hero-ph{position:absolute;top:0;bottom:0;right:0;width:68%;z-index:-1;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 30%),linear-gradient(0deg,transparent 0%,#000 14%);mask-image:linear-gradient(90deg,transparent 0%,#000 30%),linear-gradient(0deg,transparent 0%,#000 14%);
+    -webkit-mask-composite:source-in;mask-composite:intersect}
+  .hero-ph img{width:100%;height:100%;object-fit:cover;object-position:48% 30%;transform:scale(1.02);animation:zoom 18s ease-out forwards}
+  @keyframes zoom{to{transform:scale(1)}}
+  .hero-txt{padding-top:70px}
+  .hero h1{font-size:clamp(3rem,7.8vw,7rem);line-height:.92;text-transform:uppercase;max-width:46%}
+  .hero h1 .grad{display:inline-block;padding-right:.04em}
+  .hero-logo{margin:0}
+  .hero-logo img{width:min(400px,34vw);height:auto;filter:drop-shadow(0 18px 40px rgba(0,0,0,.55))}
+  .hero .slogan{font-family:Unbounded,sans-serif;font-weight:600;font-size:clamp(.95rem,1.5vw,1.2rem);color:#c9d3ea;margin:26px 0 34px;max-width:420px;letter-spacing:-.01em}
+  .hero .ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+  /* MARQUEE */
+  .marq{border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden;padding:20px 0;background:var(--bg2)}
+  .marq-track{display:flex;gap:44px;width:max-content;animation:marq 38s linear infinite}
+  .marq span{font-family:Unbounded,sans-serif;font-weight:600;font-size:.95rem;letter-spacing:.06em;text-transform:uppercase;color:#5f6b8c;display:flex;align-items:center;gap:44px;white-space:nowrap}
+  .marq span::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--blue)}
+  @keyframes marq{to{transform:translateX(-50%)}}
+
+  /* EVENTOS */
+  .ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .agenda{display:flex;align-items:center;gap:10px;margin-top:22px;padding-top:18px;height:56px;box-sizing:border-box;border-top:1px solid rgba(255,255,255,.12);font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+  .agenda img{height:34px;width:auto}
+  .agenda img[src*="jair"]{height:22px}
+  .ev{position:relative;border-radius:28px;overflow:hidden;min-height:560px;display:flex;align-items:flex-end;isolation:isolate;border:1px solid var(--line)}
+  .ev>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+  .ev:hover>img{transform:scale(1.05)}
+  .ev::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(5,7,15,.05) 20%,rgba(5,7,15,.6) 55%,rgba(5,7,15,.96) 100%)}
+  .ev-body{padding:34px;width:100%;display:flex;flex-direction:column;align-items:flex-start}
+  .ev-body .btn{flex:none}
+  .ev-tag{font-size:.7rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--ice);opacity:.8}
+  .ev h3{font-size:clamp(1.6rem,3vw,2.2rem);margin:10px 0 18px;text-transform:uppercase}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+  .chip{padding:8px 14px;border-radius:999px;font-size:.84rem;font-weight:600;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+  .ev .btn{padding:12px 20px;font-size:.88rem}
+
+  /* EXPERIÊNCIA */
+  .xp{background:radial-gradient(60% 50% at 50% 0%,rgba(61,123,255,.12),transparent 70%),var(--bg)}
+  .xp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .x{background:var(--bg);padding:34px 28px 30px;transition:background .3s}
+  .x:hover{background:#0a0f20}
+  .x .n{font-family:Unbounded,sans-serif;font-weight:600;font-size:.8rem;color:var(--blue2)}
+  .x h3{font-family:Unbounded,sans-serif;font-weight:600;font-size:1.05rem;margin:34px 0 10px;letter-spacing:-.01em}
+  .x p{color:var(--mut);font-size:.93rem}
+
+  /* SOBRE */
+  .about{display:grid;grid-template-columns:1fr 1.05fr;gap:70px;align-items:center}
+  .about-ph{position:relative}
+  .about-ph .main{border-radius:28px;overflow:hidden;background:#f3f3f3;aspect-ratio:4/5}
+  .about-ph .main img{width:100%;height:100%;object-fit:cover;object-position:center 12%}
+  .about-ph .mini{position:absolute;right:-28px;bottom:-28px;width:44%;aspect-ratio:3/4;border-radius:20px;overflow:hidden;border:5px solid var(--bg);box-shadow:0 30px 60px -20px rgba(0,0,0,.8)}
+  .about-ph .mini img{width:100%;height:100%;object-fit:cover}
+  .about h2{font-size:clamp(2.2rem,5vw,3.6rem);margin:16px 0 22px;text-transform:uppercase}
+  .about p{color:var(--mut);margin-bottom:16px;font-size:1.05rem;max-width:480px}
+  .ig{display:inline-flex;align-items:center;gap:10px;font-weight:700;margin-top:10px;padding:10px 16px 10px 12px;border-radius:999px;border:1px solid var(--line)}
+  .ig:hover{border-color:rgba(255,255,255,.3)}
+  .ig svg{width:20px;height:20px}
+
+  /* VÍDEOS */
+  .vids{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .vid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .vid{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:9/16;background:#000;border:1px solid var(--line);cursor:pointer}
+  .vid video{width:100%;height:100%;object-fit:cover}
+  .vid .ov{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;padding:20px;background:linear-gradient(180deg,rgba(0,0,0,.35),transparent 30%,transparent 60%,rgba(0,0,0,.75));transition:opacity .3s}
+  .vid.playing .ov{opacity:0;pointer-events:none}
+  .vid .pl{align-self:center;margin-top:auto;margin-bottom:auto;width:74px;height:74px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);transition:transform .25s,background .25s}
+  .vid:hover .pl{transform:scale(1.08);background:rgba(61,123,255,.6)}
+  .vid .pl svg{width:26px;height:26px;margin-left:4px}
+  .vid .cap{font-family:Unbounded,sans-serif;font-weight:600;font-size:.95rem}
+  .vid .dur{font-size:.75rem;color:#c8d0e4;font-weight:600;letter-spacing:.08em;align-self:flex-start;padding:5px 10px;border-radius:999px;background:rgba(0,0,0,.4)}
+
+  /* PACOTES */
+  .pk{background:radial-gradient(50% 40% at 50% 100%,rgba(61,123,255,.14),transparent 70%),var(--bg)}
+  .pk-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+  .plan{position:relative;border-radius:28px;padding:34px 30px 30px;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);transition:transform .3s,border-color .3s}
+  .plan:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.18)}
+  .plan.hl{background:linear-gradient(180deg,rgba(61,123,255,.16),rgba(61,123,255,.03) 60%);border-color:var(--line2);box-shadow:0 30px 80px -40px rgba(61,123,255,.8)}
+  .plan .top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+  .plan h3{font-size:1.6rem;text-transform:uppercase}
+  .plan .sub{color:var(--mut);font-size:.9rem;margin-top:6px}
+  .badge{font-size:.66rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;padding:7px 11px;border-radius:999px;background:var(--grad);color:#fff;white-space:nowrap}
+  .price{margin:30px 0 26px;padding-bottom:26px;border-bottom:1px solid var(--line);display:flex;align-items:flex-start;gap:6px}
+  .price .plus{align-self:flex-end;margin-left:6px;margin-bottom:4px;font-size:.78rem;font-weight:700;color:#ffc43c;white-space:nowrap}
+  .price small{font-weight:700;color:var(--mut);margin-top:8px}
+  .price b{font-family:Unbounded,sans-serif;font-weight:800;font-size:2.8rem;line-height:1;letter-spacing:-.03em}
+  .plan ul{list-style:none;display:grid;gap:14px;flex:1;margin-bottom:30px}
+  .plan li{display:flex;gap:12px;align-items:center;font-weight:600;font-size:.97rem}
+  .plan li i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;flex:none;background:rgba(61,123,255,.18);color:var(--blue2)}
+  .plan li i svg{width:13px;height:13px}
+  .plan li.off{color:var(--mut2);font-weight:500}
+  .plan li.off i{background:rgba(255,255,255,.04);color:var(--mut2)}
+  .plan .btn{width:100%}
+  .ev-note{color:#c3cbe0;font-size:.88rem;margin:-8px 0 20px}
+  .opt-add{font-style:normal;font-size:.72rem;font-weight:700;color:var(--blue2);margin-left:4px;letter-spacing:.02em}
+  .logi{margin-top:26px;display:flex;gap:18px;align-items:flex-start;padding:24px 26px;border-radius:22px;border:1px solid rgba(255,196,60,.35);background:linear-gradient(180deg,rgba(255,196,60,.08),rgba(255,196,60,.02))}
+  .logi-ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;flex:none;background:rgba(255,196,60,.14);color:#ffc43c}
+  .logi-ic svg{width:24px;height:24px}
+  .logi h3{font-family:Unbounded,sans-serif;font-weight:600;font-size:1rem;margin-bottom:6px}
+  .logi p{color:#b8c1d8;font-size:.95rem}
+  .logi b{color:var(--txt)}
+  .robo-txt .robo-note{font-size:.92rem;color:#c3cbe0;padding:14px 16px;border-radius:14px;background:rgba(61,123,255,.12);border:1px solid rgba(122,167,255,.25);margin-top:-12px}
+  .robo-note b{color:var(--txt)}
+  .pdet{font-size:.8rem;color:var(--blue2);font-weight:600;margin:-18px 0 22px;min-height:1px}
+  .addon{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line);margin-bottom:16px}
+  .addon b{display:block;font-size:.92rem}
+  .addon small{color:var(--mut);font-size:.76rem;font-weight:600}
+  .step{display:flex;align-items:center;gap:4px;background:rgba(0,0,0,.25);border-radius:999px;padding:4px}
+  .step button{width:32px;height:32px;border-radius:50%;border:0;background:rgba(255,255,255,.08);color:var(--txt);font-size:1.1rem;font-weight:700;cursor:pointer;line-height:1}
+  .step button:hover:not(:disabled){background:var(--blue)}
+  .step button:disabled{opacity:.3;cursor:default}
+  .step span{min-width:22px;text-align:center;font-family:Unbounded,sans-serif;font-weight:600}
+  button.opt{width:100%;text-align:left;font:inherit;color:var(--txt);cursor:pointer}
+  .fm-box{position:relative;max-height:92vh;overflow-y:auto;width:min(540px,100%)}
+  .fm-box .label{margin-bottom:10px}
+  .fm-x{position:absolute;top:14px;right:14px;width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--txt);font-size:1.4rem;cursor:pointer;line-height:1}
+  #fm-fields{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+  .fld{flex:1 1 100%;display:flex;flex-direction:column;gap:6px}
+  .fld.half{flex:1 1 calc(50% - 6px);min-width:140px}
+  .fld span{font-size:.78rem;font-weight:700;color:#aeb8d2;letter-spacing:.02em}
+  .fld input,.fld select{font:inherit;font-size:16px;color:var(--txt);background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.14);border-radius:12px;padding:12px 14px;width:100%;color-scheme:dark;-webkit-appearance:none;appearance:none}
+  .fld select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238e98b3' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;background-size:18px;padding-right:38px}
+  .fld select option{background:#0b1022}
+  .fld input:focus,.fld select:focus{outline:none;border-color:var(--blue2);box-shadow:0 0 0 3px rgba(61,123,255,.25)}
+  .fld.err input,.fld.err select{border-color:#ff6b6b}
+  .fld.err span{color:#ff8a8a}
+  .fld select:disabled{opacity:.5}
+  .fm-total{font-size:.95rem;margin-bottom:18px;color:var(--txt)}
+  .fm-total b{font-family:Unbounded,sans-serif;font-weight:800;font-size:1.25rem}
+  .fm-total span{display:block;color:#ffc43c;font-size:.82rem;font-weight:600;margin-top:2px}
+  .fm-sub{width:100%}
+  .fm-rev{white-space:pre-wrap;font-size:.9rem;line-height:1.55;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:18px;color:#d6ddee}
+  .pk-note{color:var(--mut);font-size:.88rem;margin-top:28px;text-align:center}
+
+  /* ROBÔ */
+  .robo{padding:40px 0 110px}
+  .robo-box{position:relative;border-radius:36px;overflow:hidden;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;min-height:640px;border:1px solid var(--line);isolation:isolate}
+  .robo-bg{position:absolute;top:0;bottom:0;right:0;width:62%;z-index:-2}
+  .robo-bg img{width:100%;height:100%;object-fit:cover;object-position:35% 40%}
+  .robo-box::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#05070f 0%,#05070f 38%,rgba(5,7,15,.55) 52%,rgba(5,7,15,0) 75%)}
+  .robo-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+  .robo-strip figure{border-radius:22px;overflow:hidden;aspect-ratio:4/3;border:1px solid var(--line)}
+  .robo-strip img{width:100%;height:100%;object-fit:cover}
+  .stats{display:flex;gap:30px;margin:-4px 0 24px}
+  .stats div{display:flex;flex-direction:column}
+  .stats b{font-family:Unbounded,sans-serif;font-weight:800;font-size:2rem;line-height:1.1;letter-spacing:-.03em}
+  .stats span{font-size:.8rem;color:var(--mut);font-weight:600}
+  .robo-txt{padding:60px 56px}
+  .robo-txt h2{font-size:clamp(2.4rem,6vw,4.6rem);text-transform:uppercase;margin:16px 0 20px}
+  .robo-logo{margin:14px 0 22px}
+  .robo-logo img{width:min(440px,100%);height:auto;margin-left:-6px}
+  .robo-txt p{color:#b9c2d9;max-width:430px;margin-bottom:32px;font-size:1.05rem}
+  .robo-img{align-self:end;justify-self:center;height:620px;width:auto;filter:drop-shadow(0 30px 50px rgba(0,0,0,.7))}
+
+  /* GALERIA */
+  .gtabs{display:flex;gap:8px;margin:-20px 0 28px;flex-wrap:wrap}
+  .gtabs button{font:inherit;font-weight:700;font-size:.88rem;color:var(--mut);background:transparent;border:1px solid var(--line);padding:10px 18px;border-radius:999px;cursor:pointer;transition:all .2s}
+  .gtabs button:hover{color:var(--txt);border-color:rgba(255,255,255,.3)}
+  .gtabs button.on{background:var(--txt);color:#05070f;border-color:var(--txt)}
+  .gal{columns:3;column-gap:14px}
+  .gal figure{break-inside:avoid;margin-bottom:14px;border-radius:18px;overflow:hidden;cursor:zoom-in;background:#0b1020}
+  .gal figure.hide{display:none}
+  .gal img{width:100%;height:auto;transition:transform 1s cubic-bezier(.2,.7,.2,1)}
+  .gal figure:hover img{transform:scale(1.04)}
+  .lb{position:fixed;inset:0;background:rgba(3,4,10,.94);display:none;place-items:center;z-index:60;padding:24px;cursor:zoom-out;backdrop-filter:blur(8px)}
+  .lb.on{display:grid}
+  .lb img{max-height:88vh;max-width:100%;border-radius:14px}
+
+  /* CONDIÇÕES */
+  .terms{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+  .t{background:var(--bg);padding:30px 26px}
+  .t .k{font-family:Unbounded,sans-serif;font-weight:800;font-size:1.9rem;letter-spacing:-.03em;margin-bottom:10px}
+  .t h3{font-size:.95rem;margin-bottom:6px}
+  .t p{color:var(--mut);font-size:.9rem}
+
+  /* FINAL */
+  .final{text-align:center;padding:130px 0 70px;overflow:hidden}
+  .final::before{content:"";position:absolute;left:50%;top:40%;width:900px;height:500px;transform:translate(-50%,-50%);background:radial-gradient(closest-side,rgba(61,123,255,.28),transparent);z-index:-1}
+  .final img.lg{width:min(220px,55vw);margin:0 auto 36px;opacity:.95}
+  .final h2{font-size:clamp(2.1rem,6vw,4.2rem);text-transform:uppercase;margin-bottom:18px}
+  .final p{color:var(--mut);margin-bottom:34px;font-size:1.05rem}
+  .final .row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+  .partners{margin-top:90px;padding-top:44px;border-top:1px solid var(--line);display:flex;justify-content:center;align-items:center;gap:56px;flex-wrap:wrap}
+  .pt img{width:auto;opacity:.92}
+  .foot{margin-top:40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;color:var(--mut2);font-size:.8rem}
+  /* escolha de categoria */
+  .sheet{position:fixed;inset:0;z-index:70;display:flex;align-items:flex-end;justify-content:center;background:rgba(3,4,10,.7);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .25s}
+  .sheet.on{opacity:1;pointer-events:auto}
+  .sheet-box{width:min(460px,100%);background:#0b1022;border:1px solid var(--line);border-radius:26px 26px 0 0;padding:26px 22px 30px;transform:translateY(30px);transition:transform .3s cubic-bezier(.2,.8,.2,1)}
+  .sheet.on .sheet-box{transform:none}
+  .sheet h3{font-family:Unbounded,sans-serif;font-weight:600;font-size:1.1rem;margin-bottom:6px}
+  .sheet p{color:var(--mut);font-size:.9rem;margin-bottom:20px}
+  .opt{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-radius:16px;border:1px solid var(--line);background:rgba(255,255,255,.03);margin-bottom:10px;font-weight:700;transition:border-color .2s,background .2s}
+  .opt:hover{border-color:rgba(37,211,102,.6);background:rgba(37,211,102,.08)}
+  .opt small{display:block;font-weight:500;color:var(--mut);font-size:.8rem;margin-top:2px}
+  .opt svg{width:22px;height:22px;color:var(--wa);flex:none}
+  .sheet .x-close{display:block;margin:14px auto 0;background:none;border:0;color:var(--mut);font:inherit;font-size:.9rem;cursor:pointer;padding:8px 14px}
+  @media (min-width:721px){.sheet{align-items:center}.sheet-box{border-radius:26px}}
+
+  .wa-float{position:fixed;right:18px;bottom:18px;z-index:40;width:58px;height:58px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 14px 34px -8px rgba(0,0,0,.7);transform:translateY(120px);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+  .wa-float.show{transform:none}
+  .wa-float svg{width:30px;height:30px;color:#032912}
+
+  .rv{opacity:0;transform:translateY(30px);transition:opacity .9s cubic-bezier(.2,.7,.2,1),transform .9s cubic-bezier(.2,.7,.2,1)}
+  .rv.in{opacity:1;transform:none}
+  .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+  @media (prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.marq-track,.hero-bg img{animation:none}html{scroll-behavior:auto}}
+
+  @media (max-width:960px){
+    section{padding:84px 0}
+    .xp-grid{grid-template-columns:1fr 1fr}
+    .ev-grid{grid-template-columns:1fr}
+    .ev{min-height:480px}
+    .about{grid-template-columns:1fr;gap:56px}
+    .about-ph{max-width:460px}
+    .pk-grid{grid-template-columns:1fr;max-width:480px;margin:0 auto}
+    .robo-box{grid-template-columns:1fr;min-height:0}
+    .robo-box{grid-template-rows:auto 420px}
+    .robo-bg{top:auto;left:0;width:100%;height:420px}
+    .robo-txt{padding-bottom:30px}
+    .robo-bg img{object-position:30% 35%}
+    .robo-box::before{background:linear-gradient(180deg,#05070f 0%,#05070f 45%,rgba(5,7,15,.3) 62%,rgba(5,7,15,0) 80%)}
+    .robo-txt{padding:44px 30px 0}
+    .robo-img{height:440px}
+    .terms{grid-template-columns:1fr 1fr}
+  }
+  @media (max-width:720px){
+    .ev-grid{grid-template-columns:1fr}
+    .ev{min-height:480px}
+    .ev-body{padding:26px}
+    .vid-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin:0 -20px;padding:0 20px 6px;scrollbar-width:none}
+    .vid-grid::-webkit-scrollbar{display:none}
+    .vid{flex:0 0 74%;scroll-snap-align:center}
+    .gal{columns:2;column-gap:10px}
+    .gal figure{margin-bottom:10px;border-radius:14px}
+    .robo-strip{grid-template-columns:repeat(3,1fr);gap:8px}
+    .robo-strip figure{border-radius:14px}
+    .about-ph .mini{right:-8px;bottom:-24px}
+    .hero{display:block;min-height:0;padding-bottom:56px}
+    .hero-ph{position:relative;width:100%;height:68svh;min-height:420px;
+      -webkit-mask-image:linear-gradient(0deg,transparent 0%,#000 28%);mask-image:linear-gradient(0deg,transparent 0%,#000 28%)}
+    .hero-ph img{object-position:50% 20%}
+    .hero-txt{padding-top:0;margin-top:-120px}
+    .hero-logo img{width:min(250px,64vw)}
+    .hero .slogan{margin:18px 0 26px}
+    .hero .ctas .btn{flex:1;padding:15px 16px}
+    .x{padding:26px 20px}
+    .x h3{margin-top:22px}
+    .t{padding:24px 20px}
+  }
+  @media (max-width:420px){.xp-grid,.terms{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#top" aria-label="Início"><img src="img/logo.png" alt="DJ Mothé"></a>
+    <a href="#pacotes" class="btn btn-line">Ver pacotes</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="hero-ph">
+    <picture>
+      <source media="(max-width:720px)" srcset="img/capa-m.jpg">
+      <img src="img/capa.jpg" alt="DJ Mothé animando a pista">
+    </picture>
+  </div>
+  <div class="wrap hero-txt">
+    <h1 class="hero-logo rv"><img src="img/festa-logo.png" alt="Festa do Mothé"></h1>
+    <p class="slogan rv d1">O melhor DJ gospel no seu evento!</p>
+    <div class="ctas rv d2">
+      <a href="#pacotes" class="btn btn-blue">Ver pacotes</a>
+      <a data-pick="Olá! Vi a proposta do DJ Mothé e quero tirar algumas dúvidas sobre o meu evento." class="btn btn-line" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<div class="marq" aria-hidden="true">
+  <div class="marq-track">
+    <span>Casamentos</span><span>XV anos</span><span>Igrejas</span><span>Acampamentos</span><span>Prefeituras</span><span>Aniversários</span><span>Formaturas</span>
+    <span>Casamentos</span><span>XV anos</span><span>Igrejas</span><span>Acampamentos</span><span>Prefeituras</span><span>Aniversários</span><span>Formaturas</span>
+  </div>
+</div>
+
+<!-- EVENTOS -->
+<section id="eventos">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="label">Eventos</div>
+      <h2 class="disp">Para cada momento, a festa certa</h2>
+    </div>
+    <div class="ev-grid">
+      <article class="ev rv">
+        <img src="img/igreja-palco.jpg" alt="DJ Mothé em evento de igreja" style="object-position:50% 35%">
+        <div class="ev-body">
+          <div class="ev-tag">Eventos</div>
+          <h3 class="disp">Religiosos</h3>
+          <div class="chips"><span class="chip">Igrejas</span><span class="chip">Acampamentos</span><span class="chip">Conferências</span></div>
+          <p class="ev-note">Valores sob consulta no WhatsApp</p>
+          <button type="button" data-form="religioso" class="btn btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Pedir orçamento</button>
+          <div class="agenda">Agenda <img src="img/alpha.png" alt="Alpha Produções"></div>
+        </div>
+      </article>
+      <article class="ev rv d1">
+        <img src="img/casamento-robo.jpg" alt="Casamento com o Robô LED do DJ Mothé" style="object-position:60% 50%">
+        <div class="ev-body">
+          <div class="ev-tag">Eventos</div>
+          <h3 class="disp">Sociais</h3>
+          <div class="chips"><span class="chip">Casamentos</span><span class="chip">XV anos</span><span class="chip">Aniversários</span><span class="chip">Formaturas</span></div>
+          <p class="ev-note">Veja os pacotes abaixo</p>
+          <button type="button" data-form="social" class="btn btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Pedir orçamento</button>
+          <div class="agenda">Agenda <img src="img/alpha.png" alt="Alpha Produções"></div>
+        </div>
+      </article>
+      <article class="ev rv d2">
+        <img src="img/palco.jpg" alt="Show do DJ Mothé em grande palco">
+        <div class="ev-body">
+          <div class="ev-tag">Eventos</div>
+          <h3 class="disp">Prefeituras</h3>
+          <p class="ev-note">Eventos de prefeituras · valores sob consulta no WhatsApp</p>
+          <button type="button" data-form="prefeitura" class="btn btn-wa"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Pedir orçamento</button>
+          <div class="agenda">Agenda <img src="img/jair.png" alt="Jair Produções"></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section class="xp" style="padding-top:40px">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="label">A experiência</div>
+      <h2 class="disp">Muito mais que música</h2>
+    </div>
+    <div class="xp-grid rv">
+      <div class="x"><div class="n">01</div><h3>DJ gospel</h3><p>Repertório pensado para o seu público, do começo ao fim da festa.</p></div>
+      <div class="x"><div class="n">02</div><h3>Dançarinos</h3><p>Animação que puxa os convidados para a pista.</p></div>
+      <div class="x"><div class="n">03</div><h3>Efeitos especiais</h3><p>Bazuca de efeitos para os momentos de maior impacto.</p></div>
+      <div class="x"><div class="n">04</div><h3>Robozão de LED</h3><p>O show que vira a foto mais marcante da noite.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section>
+  <div class="wrap about">
+    <div class="about-ph rv">
+      <div class="main"><img src="img/oficial.jpg" alt="DJ Mothé"></div>
+      <div class="mini"><img src="img/mothe-cabine.jpg" alt="DJ Mothé na cabine"></div>
+    </div>
+    <div class="rv d1">
+      <div class="label">A história</div>
+      <h2 class="disp">DJ <span class="grad">Mothé</span></h2>
+      <div class="stats"><div><b class="grad">23</b><span>anos de carreira</span></div><div><b class="grad">2012</b><span>dedicado à música cristã</span></div></div>
+      <p>Guilherme Mothe de Campos iniciou sua carreira como DJ há 23 anos no cenário secular. Em 2010, teve um encontro transformador com Jesus e decidiu abandonar sua trajetória musical.</p>
+      <p>Em 2012, sentiu o chamado para voltar a tocar, mas com um propósito: dedicar-se exclusivamente à música cristã. Desde então, tem se destacado e crescido no meio, levando a mensagem do Evangelho e exaltando o nome de Jesus por meio da música.</p>
+      <p>Natural de Campos-RJ, Mothe congrega na Igreja Batista em São Joaquim desde a sua conversão, é casado com Mikaela, pai do Jeff e se formou bacharel em Teologia no Seminário Adorart em 2021.</p>
+      <a class="ig" href="https://www.instagram.com/djmothe_/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>@djmothe_</a>
+    </div>
+  </div>
+</section>
+
+<!-- VÍDEOS -->
+<section class="vids" id="videos">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="label">Vídeos</div>
+      <h2 class="disp">Sinta a energia</h2>
+      <p>Toque para assistir com som.</p>
+    </div>
+    <div class="vid-grid">
+      <div class="vid rv"><video src="v/video_1493.mp4" poster="v/p_1493.jpg" preload="none" playsinline></video>
+        <div class="ov"><span class="dur">1:15</span><span class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 4v16l13-8z"/></svg></span><span class="cap">Show completo</span></div></div>
+      <div class="vid rv d1"><video src="v/video_3766.mp4" poster="v/p_3766.jpg" preload="none" playsinline></video>
+        <div class="ov"><span class="dur">1:02</span><span class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 4v16l13-8z"/></svg></span><span class="cap">Alegria na pista</span></div></div>
+      <div class="vid rv d2"><video src="v/video_9740.mp4" poster="v/p_9740.jpg" preload="none" playsinline></video>
+        <div class="ov"><span class="dur">1:02</span><span class="pl"><svg viewBox="0 0 24 24" fill="#fff"><path d="M7 4v16l13-8z"/></svg></span><span class="cap">Grandes palcos</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PACOTES -->
+<section class="pk" id="pacotes">
+  <div class="wrap">
+    <div class="head center rv">
+      <div class="label">Pacotes</div>
+      <h2 class="disp">Pacotes para eventos sociais</h2>
+      <p>Casamentos, XV anos, aniversários e formaturas. Toque em <b style="color:var(--txt)">“Quero esse pacote”</b> e fale direto com a agenda de eventos sociais.</p>
+    </div>
+    <div class="pk-grid">
+      <div class="plan rv" data-plan="start">
+        <div class="top"><div><h3 class="disp">Start</h3><div class="sub">Essencial & acessível</div></div></div>
+        <div class="price"><small>R$</small><b class="pv">0</b><span class="plus">+ logística</span></div>
+        <div class="pdet"></div>
+        <ul><li><i>✓</i>DJ Mothé</li><li><i>✓</i>Bazuca de efeitos</li><li class="off"><i>–</i>Robozão de LED</li><li class="off"><i>–</i>2 dançarinos</li></ul>
+        <div class="addon"><div><b>Robô LED</b><small>+ R$ 800 cada · até 2</small></div><div class="step"><button type="button" data-d="-1" aria-label="Tirar robô">−</button><span class="rq">0</span><button type="button" data-d="1" aria-label="Adicionar robô">+</button></div></div>
+        <button type="button" class="btn btn-wa" data-form="social" data-plan="start"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Quero esse pacote</button>
+      </div>
+      <div class="plan hl rv d1" data-plan="impact">
+        <div class="top"><div><h3 class="disp">Impact</h3><div class="sub">Presença & impacto</div></div><span class="badge">Destaque</span></div>
+        <div class="price"><small>R$</small><b class="pv">0</b><span class="plus">+ logística</span></div>
+        <div class="pdet"></div>
+        <ul><li><i>✓</i>DJ Mothé</li><li><i>✓</i>Bazuca de efeitos</li><li><i>✓</i>Robozão de LED</li><li class="off"><i>–</i>2 dançarinos</li></ul>
+        <div class="addon"><div><b>Robô extra</b><small>+ R$ 800 cada · até 1</small></div><div class="step"><button type="button" data-d="-1" aria-label="Tirar robô">−</button><span class="rq">0</span><button type="button" data-d="1" aria-label="Adicionar robô">+</button></div></div>
+        <button type="button" class="btn btn-wa" data-form="social" data-plan="impact"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Quero esse pacote</button>
+      </div>
+      <div class="plan rv d2" data-plan="experience">
+        <div class="top"><div><h3 class="disp">Experience</h3><div class="sub">Experiência completa</div></div></div>
+        <div class="price"><small>R$</small><b class="pv">0</b><span class="plus">+ logística</span></div>
+        <div class="pdet"></div>
+        <ul><li><i>✓</i>DJ Mothé</li><li><i>✓</i>Bazuca de efeitos</li><li><i>✓</i>Robozão de LED</li><li><i>✓</i>2 dançarinos</li></ul>
+        <div class="addon"><div><b>Robô extra</b><small>+ R$ 800 cada · até 1</small></div><div class="step"><button type="button" data-d="-1" aria-label="Tirar robô">−</button><span class="rq">0</span><button type="button" data-d="1" aria-label="Adicionar robô">+</button></div></div>
+        <button type="button" class="btn btn-wa" data-form="social" data-plan="experience"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Quero esse pacote</button>
+      </div>
+    </div>
+    <div class="logi rv">
+      <div class="logi-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg></div>
+      <div>
+        <h3>Logística não inclusa nos valores</h3>
+        <p>Os valores dos pacotes <b>não incluem a logística</b>, que é calculada conforme o local do evento: deslocamento aéreo ou no carro do Mothé (combustível e pedágio) e, dependendo do local, hospedagem. <b>O valor da logística é informado no WhatsApp</b>, quando você chamar a gente.</p>
+      </div>
+    </div>
+    <p class="pk-note rv">Datas reservadas mediante contrato assinado · veja as condições abaixo</p>
+  </div>
+</section>
+
+<!-- ROBÔ -->
+<section class="robo">
+  <div class="wrap">
+    <div class="robo-box rv">
+      <div class="robo-bg"><img src="img/robo-fumaca.jpg" alt="Robozão de LED na pista com fumaça e confete"></div>
+      <div class="robo-txt">
+        <div class="label">Show do</div>
+        <h2 class="robo-logo"><img src="img/robo-logo.png" alt="Robô LED"></h2>
+        <p>O Robozão de LED entra na pista interagindo com os seus convidados, dançando, criando fotos, memórias incríveis e animando ainda mais a festa.</p>
+        <p class="robo-note">Já vem nos pacotes <b>Impact</b> e <b>Experience</b>. Quer mais robôs na pista? Cada robô extra custa <b>R$ 800</b>: no <b>Start</b> dá para incluir até 2, e no Impact e no Experience, mais 1.</p>
+        <a href="#pacotes" class="btn btn-blue">Adicionar robô no meu pacote</a>
+      </div>
+    </div>
+    <div class="robo-strip">
+      <figure class="rv"><img src="img/robo-roxo.jpg" alt="Robô LED no palco"></figure>
+      <figure class="rv d1"><img src="img/igreja-bazuca-robo.jpg" alt="DJ Mothé com a bazuca e o robô ao fundo" style="object-position:50% 40%"></figure>
+      <figure class="rv d2"><img src="img/robo-foto.jpg" alt="Convidado filmando o Robô LED" style="object-position:50% 70%"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section style="padding-top:20px">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="label">Galeria</div>
+      <h2 class="disp">Momentos</h2>
+    </div>
+    <div class="gtabs rv" role="tablist">
+      <button class="on" data-f="todos">Todos</button><button data-f="religioso">Religiosos</button><button data-f="social">Sociais</button>
+    </div>
+    <div class="gal rv">
+      <figure data-g="religioso"><img src="img/igreja-arena-faiscas.jpg" alt="DJ Mothé com o robô e faíscas em evento de igreja em arena" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/acamp-bazuca.jpg" alt="DJ Mothé com bazuca e bastões luminosos em acampamento" loading="lazy"></figure>
+      <figure data-g="social"><img src="img/casamento.jpg" alt="Casamento com o Robô LED" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/igreja-faiscas.jpg" alt="Show em evento de igreja com faíscas" loading="lazy"></figure>
+      <figure data-g="geral"><img src="img/mothe-cabine.jpg" alt="DJ Mothé na cabine" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/igreja-arena-bazuca.jpg" alt="DJ Mothé com bazuca de fumaça e o robô em evento de igreja" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/acamp-fogos.jpg" alt="Fogos em acampamento" loading="lazy"></figure>
+      <figure data-g="social"><img src="img/xv.jpg" alt="Festa de XV anos" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/igreja-fogo.jpg" alt="DJ Mothé com bazuca, fogo e fumaça em evento de igreja" loading="lazy"></figure>
+      <figure data-g="geral"><img src="img/robo-roxo.jpg" alt="Robô LED no palco" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/igreja-bazuca-robo.jpg" alt="Bazuca com o robô ao fundo" loading="lazy"></figure>
+      <figure data-g="social"><img src="img/casamento-robo.jpg" alt="Noivos dançando com o Robô LED" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/palco.jpg" alt="Show em grande palco" loading="lazy"></figure>
+      <figure data-g="geral"><img src="img/mothe2.jpg" alt="DJ Mothé tocando" loading="lazy"></figure>
+      <figure data-g="religioso"><img src="img/igreja.jpg" alt="Pista cheia em evento" loading="lazy"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- CONDIÇÕES -->
+<section style="padding-top:40px">
+  <div class="wrap">
+    <div class="head rv">
+      <div class="label">Fechamento</div>
+      <h2 class="disp">Condições</h2>
+    </div>
+    <div class="terms rv">
+      <div class="t"><div class="k grad">30%</div><h3>Reserva da data</h3><p>Datas reservadas mediante contrato assinado, com sinal mínimo de 30% do valor total.</p></div>
+      <div class="t"><div class="k grad">2 dias</div><h3>Restante do valor</h3><p>Pago como o cliente preferir, quitado até 2 dias antes do evento.</p></div>
+      <div class="t"><div class="k grad">Cartão</div><h3>Todas as bandeiras</h3><p>No parcelamento no crédito, os juros ficam por conta do contratante.</p></div>
+      <div class="t"><div class="k grad">30 dias</div><h3>Validade</h3><p>Esta proposta é válida por 30 dias.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="final">
+  <div class="wrap">
+    <img class="lg rv" src="img/logo.png" alt="DJ Mothé">
+    <h2 class="disp rv">Bora fazer a <span class="grad">sua festa?</span></h2>
+    <p class="rv">Escolha o seu pacote ou chame a gente para tirar qualquer dúvida.</p>
+    <div class="row rv">
+      <a href="#pacotes" class="btn btn-blue">Ver pacotes</a>
+      <a data-pick="Olá! Vi a proposta do DJ Mothé e quero tirar algumas dúvidas sobre o meu evento." class="btn btn-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Falar no WhatsApp</a>
+    </div>
+    <div class="partners rv">
+      <div class="pt"><img src="img/logo.png" alt="DJ Mothé" style="height:30px"></div>
+      <div class="pt"><img src="img/alpha.png" alt="Alpha Produções" style="height:46px"></div>
+      <div class="pt"><img src="img/jair.png" alt="Jair Produções" style="height:30px"></div>
+    </div>
+    <div class="foot">
+      <span>Mothé Produções · CNPJ 33.780.501/0001-97</span>
+      <span>@djmothe_</span>
+    </div>
+  </div>
+</section>
+
+<a class="wa-float" id="waf" data-pick="Olá! Vi a proposta do DJ Mothé e quero tirar algumas dúvidas sobre o meu evento." target="_blank" rel="noopener" aria-label="Falar no WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg></a>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-t">
+  <div class="sheet-box">
+    <h3 id="sheet-t">Qual é o seu evento?</h3>
+    <p>Assim você fala direto com quem cuida da agenda.</p>
+    <button type="button" class="opt" data-form="religioso"><span>Religioso<small>Igrejas, acampamentos e conferências</small></span><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg></button>
+    <button type="button" class="opt" data-form="social"><span>Social<small>Casamentos, XV anos, aniversários, formaturas</small></span><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg></button>
+    <button type="button" class="opt" data-form="prefeitura"><span>Prefeitura<small>Eventos de prefeituras</small></span><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg></button>
+    <button class="x-close" type="button" data-close>Cancelar</button>
+  </div>
+</div>
+
+<div class="sheet" id="fm" role="dialog" aria-modal="true" aria-labelledby="fm-t">
+  <div class="sheet-box fm-box">
+    <button type="button" class="fm-x" data-close aria-label="Fechar">×</button>
+    <div class="fm-step" id="fm-1">
+      <div class="label" id="fm-k">Evento social</div>
+      <h3 id="fm-t">Conte sobre o seu evento</h3>
+      <p>Leva menos de 1 minuto. Depois é só enviar no WhatsApp.</p>
+      <form id="fm-form" novalidate>
+        <div id="fm-fields"></div>
+        <div class="fm-total" id="fm-total"></div>
+        <button type="submit" class="btn btn-blue fm-sub">Continuar</button>
+      </form>
+    </div>
+    <div class="fm-step" id="fm-2" hidden>
+      <div class="label">Quase lá</div>
+      <h3>Confira e envie</h3>
+      <p>Toque no botão verde para mandar no WhatsApp da agenda.</p>
+      <div class="fm-rev" id="fm-rev"></div>
+      <a id="fm-go" class="btn btn-wa fm-sub" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><use href="#wa"/></svg>Enviar no WhatsApp</a>
+      <button type="button" class="x-close" id="fm-back">Voltar e editar</button>
+    </div>
+  </div>
+</div>
+
+<div class="lb" id="lb"><img alt=""></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.2-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.5s1.1 2.9 1.2 3.1c.1.2 2.1 3.2 5.1 4.5.7.3 1.3.5 1.7.6.7.2 1.4.2 1.9.1.6-.1 1.7-.7 2-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2c-1.5 0-3-.4-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2z"/></symbol>
+</svg>
+
+<script>
+  // ===== Números de WhatsApp de cada agenda =====
+  var NUMEROS = {
+    religioso:  "5521998572244",  // Alpha Produções
+    social:     "5521997621401",  // Alpha Produções
+    prefeitura: "5521982095584"   // Jair Produções
+  };
+
+  // ===== Pacotes (eventos sociais) =====
+  var PACOTES = {
+    start:      {nome:"START",      preco:3500, maxRobos:2},
+    impact:     {nome:"IMPACT",     preco:4500, maxRobos:1},
+    experience: {nome:"EXPERIENCE", preco:5500, maxRobos:1}
+  };
+  var PRECO_ROBO = 800;
+
+  // ===== De onde veio o cliente (?origem=instagram | whatsapp | indicacao) =====
+  var ORIGEM = (function(){
+    var v = "";
+    try { v = new URLSearchParams(location.search).get("origem") || location.hash.replace("#",""); } catch(e){}
+    var mapa = {instagram:"Instagram", whatsapp:"WhatsApp", indicacao:"Indicação"};
+    return mapa[(v||"").toLowerCase()] || "";
+  })();
+
+  // ===== Integração com o sistema da Alpha (Firebase) =====
+  // Cada pedido enviado cai na aba "Pedidos do Site" do sistema de gestão.
+  var FIREBASE = {
+    projeto: "gestao-alpha-producoes",
+    chave:   "AIzaSyBR6gD3Bjo57qNhQqKE1rWb2LgmhJoWY9E",
+    colecao: "alpha_site_pedidos_v1",
+    artista: "art_dj_mothe"
+  };
+  function fsVal(v){
+    if(v===null||v===undefined) return {nullValue:null};
+    if(v instanceof Date) return {timestampValue:v.toISOString()};
+    if(typeof v==="number") return Number.isInteger(v)?{integerValue:String(v)}:{doubleValue:v};
+    if(typeof v==="object"){var f={};Object.keys(v).forEach(function(k){f[k]=fsVal(v[k])});return {mapValue:{fields:f}}}
+    return {stringValue:String(v)};
+  }
+  function salvarPedido(id, tipo, d, resumo){
+    try{
+      var campos={}; Object.keys(d).forEach(function(k){ if(typeof d[k]==="string" && d[k]) campos[k]=d[k].slice(0,300) });
+      var doc={
+        artistId: FIREBASE.artista, tipoEvento: tipo, status: "novo", criadoEm: new Date(),
+        origem: ORIGEM || "Link direto",
+        nome: (d.nome||d.responsavel||"").slice(0,120), whatsapp: (d.whatsapp||"").slice(0,39),
+        cidade: (d.cidade||"").slice(0,120), dataEvento: d.data||"", horario: d.horario||"",
+        resumo: resumo.slice(0,2900), campos: campos
+      };
+      if(tipo==="social"){ doc.pacote=d.pacote||""; doc.robos=Number(d.robos||0); doc.total=Number(d.total||0) }
+      var f={}; Object.keys(doc).forEach(function(k){f[k]=fsVal(doc[k])});
+      var url="https://firestore.googleapis.com/v1/projects/"+FIREBASE.projeto+"/databases/(default)/documents/"+FIREBASE.colecao+"?documentId="+encodeURIComponent(id)+"&key="+FIREBASE.chave;
+      fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({fields:f}),keepalive:true}).catch(function(){});
+    }catch(e){}
+  }
+
+  function brl(n){return n.toLocaleString("pt-BR")}
+  function linkWa(cat,msg){return "https://wa.me/" + NUMEROS[cat] + "?text=" + encodeURIComponent(msg)}
+
+  // ----- robôs extras nos cards dos pacotes -----
+  var robosPlano = {start:0, impact:0, experience:0};
+  function totalPlano(k,r){return PACOTES[k].preco + r*PRECO_ROBO}
+  function pintaPlano(card){
+    var k=card.getAttribute('data-plan'), r=robosPlano[k];
+    card.querySelector('.pv').textContent = brl(totalPlano(k,r));
+    card.querySelector('.rq').textContent = r;
+    card.querySelector('.pdet').innerHTML = r ? 'Pacote R$ '+brl(PACOTES[k].preco)+' + '+r+' robô'+(r>1?'s':'')+' R$ '+brl(r*PRECO_ROBO) : '';
+    card.querySelector('[data-d="-1"]').disabled = r<=0;
+    card.querySelector('[data-d="1"]').disabled = r>=PACOTES[k].maxRobos;
+  }
+  document.querySelectorAll('.plan[data-plan]').forEach(function(card){
+    var k=card.getAttribute('data-plan');
+    card.querySelectorAll('.step button').forEach(function(bt){
+      bt.addEventListener('click',function(){
+        robosPlano[k]=Math.max(0,Math.min(PACOTES[k].maxRobos,robosPlano[k]+Number(bt.getAttribute('data-d'))));
+        pintaPlano(card);
+      });
+    });
+    pintaPlano(card);
+  });
+
+  // ----- formulários -----
+  var TIPOS = {
+    religioso:{titulo:"Evento religioso", campos:[
+      {id:"responsavel", rot:"Nome do responsável", tipo:"text", obr:1, meia:1},
+      {id:"whatsapp", rot:"Seu WhatsApp", tipo:"tel", obr:1, meia:1},
+      {id:"organizacao", rot:"Igreja ou organização", tipo:"text", obr:1},
+      {id:"tipo", rot:"Tipo de evento", tipo:"select", ops:["Culto","Conferência","Acampamento"], obr:1},
+      {id:"data", rot:"Data", tipo:"date", obr:1, meia:1},
+      {id:"horario", rot:"Horário", tipo:"time", meia:1},
+      {id:"cidade", rot:"Cidade", tipo:"text", obr:1},
+      {id:"publico", rot:"Público estimado", tipo:"number"}
+    ]},
+    social:{titulo:"Evento social", campos:[
+      {id:"nome", rot:"Seu nome", tipo:"text", obr:1, meia:1},
+      {id:"whatsapp", rot:"Seu WhatsApp", tipo:"tel", obr:1, meia:1},
+      {id:"tipo", rot:"Tipo de evento", tipo:"select", ops:["Casamento","XV anos","Aniversário","Formatura"], obr:1},
+      {id:"data", rot:"Data", tipo:"date", obr:1, meia:1},
+      {id:"horario", rot:"Horário", tipo:"time", meia:1},
+      {id:"cidade", rot:"Cidade", tipo:"text", obr:1, meia:1},
+      {id:"local", rot:"Local (salão)", tipo:"text", meia:1},
+      {id:"convidados", rot:"Nº de convidados", tipo:"number"},
+      {id:"pacote", rot:"Pacote", tipo:"select", ops:["START","IMPACT","EXPERIENCE"], vals:["start","impact","experience"], obr:1, meia:1},
+      {id:"robos", rot:"Robôs extras", tipo:"select", ops:["Nenhum"], vals:["0"], meia:1}
+    ]},
+    prefeitura:{titulo:"Evento de prefeitura", campos:[
+      {id:"responsavel", rot:"Nome do responsável", tipo:"text", obr:1, meia:1},
+      {id:"cargo", rot:"Cargo", tipo:"text", meia:1},
+      {id:"whatsapp", rot:"Seu WhatsApp", tipo:"tel", obr:1},
+      {id:"prefeitura", rot:"Prefeitura ou secretaria", tipo:"text", obr:1},
+      {id:"evento", rot:"Nome do evento", tipo:"text", obr:1},
+      {id:"data", rot:"Data", tipo:"date", obr:1, meia:1},
+      {id:"horario", rot:"Horário", tipo:"time", meia:1},
+      {id:"cidade", rot:"Cidade", tipo:"text", obr:1, meia:1},
+      {id:"publico", rot:"Público estimado", tipo:"number", meia:1}
+    ]}
+  };
+
+  var fm=document.getElementById('fm'), sheet=document.getElementById('sheet');
+  var form=document.getElementById('fm-form'), campos=document.getElementById('fm-fields');
+  var tipoAtual='social';
+
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+  function montaForm(tipo, pre){
+    tipoAtual=tipo; pre=pre||{};
+    document.getElementById('fm-k').textContent=TIPOS[tipo].titulo;
+    campos.innerHTML = TIPOS[tipo].campos.map(function(c){
+      var inp;
+      if(c.tipo==='select'){
+        inp='<select name="'+c.id+'"'+(c.obr?' required':'')+'>'+(c.id==='robos'?'':'<option value="">Escolha…</option>')+
+          c.ops.map(function(o,i){var v=c.vals?c.vals[i]:o;return '<option value="'+esc(v)+'">'+esc(o)+'</option>'}).join('')+'</select>';
+      } else {
+        inp='<input name="'+c.id+'" type="'+c.tipo+'"'+(c.obr?' required':'')+(c.tipo==='number'?' min="0" inputmode="numeric"':'')+(c.tipo==='tel'?' inputmode="tel" placeholder="(21) 99999-9999" autocomplete="tel"':'')+'>';
+      }
+      return '<label class="fld'+(c.meia?' half':'')+'"><span>'+c.rot+(c.obr?' *':'')+'</span>'+inp+'</label>';
+    }).join('');
+    if(tipo==='social'){
+      var sp=form.elements.pacote, sr=form.elements.robos;
+      function opRobos(){
+        var k=sp.value, max=k?PACOTES[k].maxRobos:0, atual=Number(sr.value||0);
+        var h='<option value="0">Nenhum</option>';
+        for(var i=1;i<=max;i++) h+='<option value="'+i+'">'+i+' robô'+(i>1?'s':'')+' (+ R$ '+brl(i*PRECO_ROBO)+')</option>';
+        sr.innerHTML=h; sr.value=String(Math.min(atual,max)); sr.disabled=!k; total();
+      }
+      function total(){
+        var k=sp.value, el=document.getElementById('fm-total');
+        if(!k){el.innerHTML='';return}
+        var r=Number(sr.value||0);
+        el.innerHTML='Total: <b>R$ '+brl(totalPlano(k,r))+'</b> <span>+ logística (informada no WhatsApp)</span>';
+      }
+      sp.addEventListener('change',opRobos); sr.addEventListener('change',total);
+      if(pre.pacote){sp.value=pre.pacote}
+      opRobos();
+      if(pre.robos){sr.value=String(pre.robos); total()}
+    } else {
+      document.getElementById('fm-total').innerHTML='<span>Valores sob consulta, informados no WhatsApp.</span>';
+    }
+    if(pre.tipo && form.elements.tipo) form.elements.tipo.value=pre.tipo;
+    document.getElementById('fm-1').hidden=false; document.getElementById('fm-2').hidden=true;
+  }
+
+  function dataBR(v){if(!v)return"";var p=v.split("-");return p[2]+"/"+p[1]+"/"+p[0]}
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var ok=true;
+    form.querySelectorAll('[required]').forEach(function(el){
+      var vazio=!String(el.value).trim(); el.closest('.fld').classList.toggle('err',vazio); if(vazio)ok=false;
+    });
+    if(!ok){var p=form.querySelector('.err input,.err select'); if(p)p.focus(); return}
+    var d={}; TIPOS[tipoAtual].campos.forEach(function(c){d[c.id]=(form.elements[c.id].value||"").trim()});
+    var L=[], t=TIPOS[tipoAtual].titulo;
+    L.push("Olá! Vim pela proposta do DJ Mothé e quero um orçamento.");
+    L.push(""); L.push("*"+t+"*");
+    TIPOS[tipoAtual].campos.forEach(function(c){
+      var v=d[c.id]; if(!v||c.id==='pacote'||c.id==='robos'||c.id==='whatsapp')return;
+      if(c.tipo==='date')v=dataBR(v);
+      L.push("• "+c.rot+": "+v);
+    });
+    if(tipoAtual==='social'){
+      var P=PACOTES[d.pacote], r=Number(d.robos||0);
+      L.push("• Pacote: "+P.nome+" (R$ "+brl(P.preco)+")");
+      if(r) L.push("• Robôs extras: "+r+" (+ R$ "+brl(r*PRECO_ROBO)+")");
+      L.push("• Total: R$ "+brl(totalPlano(d.pacote,r))+" + logística");
+      d.total=totalPlano(d.pacote,r);
+    }
+    if(ORIGEM){L.push(""); L.push("Origem: "+ORIGEM)}
+    var msg=L.join("\n");
+    d.origem=ORIGEM; d.tipoEvento=tipoAtual;
+    pedidoAtual={id:'ped_'+Date.now().toString(36)+Math.random().toString(36).slice(2,8), tipo:tipoAtual, d:d, msg:msg, enviado:false};
+    document.getElementById('fm-rev').textContent=msg;
+    document.getElementById('fm-go').href=linkWa(tipoAtual,msg);
+    document.getElementById('fm-1').hidden=true; document.getElementById('fm-2').hidden=false;
+    fm.querySelector('.fm-box').scrollTop=0;
+  });
+  form.addEventListener('input',function(e){var f=e.target.closest('.fld'); if(f)f.classList.remove('err')});
+  document.getElementById('fm-back').addEventListener('click',function(){document.getElementById('fm-1').hidden=false;document.getElementById('fm-2').hidden=true});
+  var pedidoAtual=null;
+  document.getElementById('fm-go').addEventListener('click',function(){
+    if(pedidoAtual && !pedidoAtual.enviado){ pedidoAtual.enviado=true; salvarPedido(pedidoAtual.id, pedidoAtual.tipo, pedidoAtual.d, pedidoAtual.msg); }
+    setTimeout(fecharTudo,400);
+  });
+
+  function abreForm(tipo,pre){sheet.classList.remove('on'); montaForm(tipo,pre); fm.classList.add('on'); fm.querySelector('.fm-box').scrollTop=0}
+  function fecharTudo(){sheet.classList.remove('on'); fm.classList.remove('on')}
+
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-form]');
+    if(b){
+      e.preventDefault();
+      var k=b.getAttribute('data-plan');
+      abreForm(b.getAttribute('data-form'), k?{pacote:k, robos:robosPlano[k]}:{});
+      return;
+    }
+    var pk=e.target.closest('[data-pick]');
+    if(pk){e.preventDefault(); sheet.classList.add('on'); return}
+    if(e.target.closest('[data-close]') || e.target===sheet || e.target===fm) fecharTudo();
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')fecharTudo()});
+  // links de reserva (se o script do formulário falhar, o botão ainda abre o WhatsApp)
+  document.querySelectorAll('[data-pick]').forEach(function(a){a.href=linkWa('social',a.getAttribute('data-pick'))});
+
+  // menu fica sólido ao rolar + botão flutuante aparece depois do topo
+  var nav=document.getElementById('nav'), waf=document.getElementById('waf');
+  function onScroll(){var y=window.scrollY;nav.classList.toggle('solid',y>40);waf.classList.toggle('show',y>window.innerHeight*.6)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  // animação de entrada
+  (function(){
+    var els=document.querySelectorAll('.rv');
+    if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in')});return}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:"0px 0px -40px 0px"});
+    els.forEach(function(e){io.observe(e)});
+  })();
+
+  // vídeos: toca um por vez
+  var vids=[].slice.call(document.querySelectorAll('.vid'));
+  vids.forEach(function(box){
+    var v=box.querySelector('video');
+    box.addEventListener('click',function(){
+      if(v.paused){
+        vids.forEach(function(o){var ov=o.querySelector('video');if(ov!==v&&!ov.paused){ov.pause()}});
+        v.controls=true; var p=v.play(); if(p&&p.catch)p.catch(function(){});
+      }
+    });
+    v.addEventListener('play',function(){box.classList.add('playing')});
+    v.addEventListener('pause',function(){box.classList.remove('playing');v.controls=false});
+    v.addEventListener('ended',function(){box.classList.remove('playing');v.controls=false});
+  });
+
+  // galeria: filtros
+  document.querySelectorAll('.gtabs button').forEach(function(bt){
+    bt.addEventListener('click',function(){
+      document.querySelectorAll('.gtabs button').forEach(function(x){x.classList.toggle('on',x===bt)});
+      var f=bt.getAttribute('data-f');
+      document.querySelectorAll('.gal figure').forEach(function(fg){fg.classList.toggle('hide',f!=='todos'&&fg.getAttribute('data-g')!==f)});
+    });
+  });
+
+  // galeria: ampliar foto
+  (function(){
+    var lb=document.getElementById('lb'),im=lb.querySelector('img');
+    document.querySelectorAll('.gal figure').forEach(function(f){
+      f.addEventListener('click',function(){var i=f.querySelector('img');im.src=i.src;im.alt=i.alt;lb.classList.add('on')});
+    });
+    lb.addEventListener('click',function(){lb.classList.remove('on')});
+  })();
+</script>
+</body>
+</html>
